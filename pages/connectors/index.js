@@ -19,3 +19,15 @@ export const walletlink = new WalletLinkConnector({
     url: RPC_URLS[1],
     appName: "my-app",
 });
+
+/**
+ * 
+ * @param {*} connector 
+ * @returns 
+ */
+export function getConnectorName(connector) {
+    return connector instanceof InjectedConnector ? "MetaMask" :
+        connector instanceof WalletConnectConnector ? "WalletConnect" :
+            connector instanceof WalletLink ? "WalletLinkConnector" :
+                "Wallet";
+}

@@ -1,3 +1,101 @@
+import { pairsQuery } from './queries';
+
+export const getPoolsByTokenAdresses = async (tokenIn, tokenOut) => {
+    const uniswapUrl = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2";
+    console.log({tokenIn}, {tokenOut});
+    const count = 10;
+    require('isomorphic-fetch')
+    try {
+        const response = await fetch(uniswapUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify({
+                query: pairsQuery(count, tokenIn, tokenOut),
+            }),
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(tokenIn, tokenOut, error);
+    }
+}
+
+export const getSwapDetailsWithPool = async (pool, amount, tokenId, tokenOut) => {
+    try {
+        const pool1 = pool.data.pairs0[0];
+        const pool2 = pool.data.pairs1[0];
+        const temp = pool1 ? pool1 : pool2;
+        const usdPrice0 = await getPrice(tokenId);
+        const usdPriceAmount = Number(usdPrice0) * Number(amount);
+
+        let reserveIn = temp.reserve0.toString();
+        let reserveOut = temp.reserve1.toString();
+
+        const validateReserve = String(tokenOut).toLowerCase() === String(temp.token1.id).toLowerCase()
+
+        const _reserves =
+            validateReserve
+                ? [reserveIn, reserveOut]
+                : [reserveOut, reserveIn];
+
+        reserveIn = _reserves[0];
+        reserveOut = _reserves[1];
+
+        const priceForOneTokenOut = reserveOut / reserveIn;
+        const amountOut = getAmountOut(amount, reserveIn, reserveOut);
+
+        const difference = Number(amountOut) - (Number(priceForOneTokenOut) * Number(amount));
+        const percentageDifference = difference / (Number(priceForOneTokenOut) * Number(amount));
+        const percentage = percentageDifference * 100;
+
+        const usdPrice0Percentage = (percentage / 100) * Number(usdPriceAmount);
+
+        console.log(`You sell ${validateReserve ? temp.token0.symbol : temp.token1.symbol} : ${amount} ~$${usdPriceAmount}`)
+        console.log(`You buy ${validateReserve ? temp.token1.symbol : temp.token0.symbol} : ${amountOut} ~$${usdPriceAmount + usdPrice0Percentage} (${percentage.toFixed(2)})`);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// function to get usd price of token using coingecko
+export const getPrice = async (symbol) => {
+    try {
+        const axios = require('axios');
+        const usdVS = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${symbol.toLowerCase()}&vs_currencies=usd`);
+        return parseFloat(usdVS.data[symbol.toLowerCase()].usd);
+    } catch (error) {
+        console.warn(`Can't get price for ${symbol}, returning 0`);
+        return 0;
+    }
+}
+
+export const getAmountOut = (amountIn, reserveIn, reserveOut) => {
+    const amountInWithFee = Number(amountIn) * 997;
+    const numerator = Number(amountInWithFee) * Number(reserveOut);
+    const denominator = Number(reserveIn) * 1000 + Number(amountInWithFee);
+    return numerator / denominator;
+}
+
+
+// see https://dailydefi.org/articles/price-impact-and-how-to-calculate/ for more info
+const getConstantProduct = (reserve0, reserve1, amount) => {
+    const constantProduct = Number(reserve0) * Number(reserve1);
+    const new_amount_in = Number(reserve0) + Number(amount);
+    const new_amount_out = constantProduct / new_amount_in;
+
+    const amount_out_receive = Number(reserve1) - Number(new_amount_out);
+    const amount_paid_for_token = Number(amount) / Number(amount_out_receive);
+
+    // const difference = Number(amount_paid_for_token) - Number(priceForOneTokenIn);
+    // const percentageDifference = difference / Number(priceForOneTokenIn);
+    // const percentage = percentageDifference * 100;
+    // const priceImpact = percentage * Number(amount);
+}
+
+
 /**
  * 
  * @param {Number} priority - 1: high, 2: medium, 3: low

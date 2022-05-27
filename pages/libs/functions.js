@@ -1,8 +1,30 @@
-import { pairsQuery } from './queries';
+import { pairsQuery, pairsByIdQuery } from './queries';
+
+const uniswapUrl = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2";
+const balancerUrl = "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2";
+
+export const getPoolById = async (id) => {
+    try {
+        const response = await fetch(uniswapUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify({
+                query: pairsByIdQuery(id),
+            }),
+        });
+        const data = await response.json();
+        console.log({ data });
+        return data.data.pairs;
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 export const getPoolsByTokenAdresses = async (tokenIn, tokenOut) => {
-    const uniswapUrl = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2";
-    console.log({tokenIn}, {tokenOut});
+    console.log({ tokenIn }, { tokenOut });
     const count = 10;
     require('isomorphic-fetch')
     try {
@@ -17,6 +39,23 @@ export const getPoolsByTokenAdresses = async (tokenIn, tokenOut) => {
             }),
         });
         const data = await response.json();
+        console.log({ data });
+        if (data.data.pairs0.length === 0 && data.data.pairs1.length === 0) {
+            console.log("trying with balancer")
+            const response = await fetch(balancerUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify({
+                    query: pairsQuery(count, tokenIn, tokenOut),
+                }),
+            });
+            const data = await response.json();
+            console.log(data.data.pairs0)
+            return data.data.pairs0;
+        }
         return data;
     } catch (error) {
         console.error(tokenIn, tokenOut, error);
@@ -24,15 +63,19 @@ export const getPoolsByTokenAdresses = async (tokenIn, tokenOut) => {
 }
 
 export const getSwapDetailsWithPool = async (pool, amount, tokenId, tokenOut) => {
+    //console.log({ pool })
     try {
-        const pool1 = pool.data.pairs0[0];
-        const pool2 = pool.data.pairs1[0];
-        const temp = pool1 ? pool1 : pool2;
+        //console.log(pool, amount, tokenId, tokenOut);
+        //const pool1 = pool.data.pairs0[0];
+        //const pool2 = pool.data.pairs1[0];
+        //const temp = pool1 ? pool1 : pool2;
+        const temp = pool[0];
+        //console.log("temp pool", temp)
         const usdPrice0 = await getPrice(tokenId);
         const usdPriceAmount = Number(usdPrice0) * Number(amount);
 
-        let reserveIn = temp.reserve0.toString();
-        let reserveOut = temp.reserve1.toString();
+        let reserveIn = temp.reserve0//.toString();
+        let reserveOut = temp.reserve1//.toString();
 
         const validateReserve = String(tokenOut).toLowerCase() === String(temp.token1.id).toLowerCase()
 
@@ -55,6 +98,7 @@ export const getSwapDetailsWithPool = async (pool, amount, tokenId, tokenOut) =>
 
         console.log(`You sell ${validateReserve ? temp.token0.symbol : temp.token1.symbol} : ${amount} ~$${usdPriceAmount}`)
         console.log(`You buy ${validateReserve ? temp.token1.symbol : temp.token0.symbol} : ${amountOut} ~$${usdPriceAmount + usdPrice0Percentage} (${percentage.toFixed(2)})`);
+        return amountOut;
     } catch (error) {
         console.error(error);
     }

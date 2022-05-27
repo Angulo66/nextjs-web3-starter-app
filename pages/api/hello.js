@@ -1,7 +1,15 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { getPoolsByTokenAdresses, getSwapDetailsWithPool } from "../libs/functions"
 
+
 const pairs = [
+  // {
+  //   name: 'ETH>STR',
+  //   tokenId: "ethereum",
+  //   tokenInAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  //   tokenOutAddress: '0x11c1a6b3ed6bb362954b29d3183cfa97a0c806aa',
+  //   amount: 2,
+  // },
   {
     name: 'ETH>WPE',
     tokenId: "ethereum",
@@ -37,27 +45,27 @@ const pairs = [
   //   tokenOutAddress: '0xd075e95423c5c4ba1e122cae0f4cdfa19b82881b',
   //   amount: 10000,
   // },
-  {
-    name: 'USDC>ETH',
-    tokenId: "usd-coin",
-    tokenInAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-    tokenOutAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-    amount: 2000,
-  },
-  {
-    name: 'WBTC>ETH',
-    tokenId: "bitcoin",
-    tokenInAddress: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-    tokenOutAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-    amount: 1,
-  },
-  {
-    name: 'ETH>WBTC',
-    tokenId: "bitcoin",
-    tokenInAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-    tokenOutAddress: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-    amount: 30,
-  }
+  // {
+  //   name: 'USDC>ETH',
+  //   tokenId: "usd-coin",
+  //   tokenInAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+  //   tokenOutAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  //   amount: 2000,
+  // },
+  // {
+  //   name: 'WBTC>ETH',
+  //   tokenId: "bitcoin",
+  //   tokenInAddress: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+  //   tokenOutAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  //   amount: 1,
+  // },
+  // {
+  //   name: 'ETH>WBTC',
+  //   tokenId: "bitcoin",
+  //   tokenInAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  //   tokenOutAddress: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+  //   amount: 30,
+  // }
 ]
 
 export default async function handler(req, res) {

@@ -1,5 +1,5 @@
 export const pairsQuery = (count, token, tokenOut) => {
-    return `{
+  return `{
       pairs0: pairs (
         first: ${count},
         where: { 
@@ -49,4 +49,29 @@ export const pairsQuery = (count, token, tokenOut) => {
         totalSupply
       }
   }`;
+};
+
+export const pairsByIdQuery = (id) => {
+  return `{
+    pairs (
+      where: { 
+        id: "${id}"
+      },
+    ) {
+      id
+      token0 {
+        id
+        decimals
+        symbol
+      }
+      token1 {
+        id
+        decimals
+        symbol
+      }
+      reserve0
+      reserve1
+      totalSupply
+    }
+}`;
 };

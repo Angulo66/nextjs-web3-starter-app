@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { getPoolsByTokenAdresses, getSwapDetailsWithPool, getPoolById } from "../libs/functions"
+import { getPoolsByTokenAdresses, getSwapDetailsWithPool, getPoolById, dijkstra, testFunction } from "../libs/functions"
 
 const params = {
     name: "ETH>STR",
@@ -29,16 +29,21 @@ export default async function handler(req, res) {
     console.warn("Swap for pairs with hops test:::")
     let results = [];
     let amountIn = params.amount;
-    for (let i = 0; i < params.poolIds.length; i++) {
-        //console.warn(`Output for ${pairs[i].name}`);
-        //const pool = await getPoolsByTokenAdresses(pairs[i].tokenInAddress, pairs[i].tokenOutAddress);
-        const pool = await getPoolById(params.poolIds[i]);
-        console.log(`hop ${i + 1}`);
-        const response = await getSwapDetailsWithPool(pool, amountIn, params.tokenNames[i], params.tokenPaths[i + 1]);
-        amountIn = response;
-        //console.log(`output ${i + 1}`, response);
-        results.push(response);
-    }
-    console.log({ results });
+
+    dijkstra();
+
+
+    // for (let i = 0; i < params.poolIds.length; i++) {
+    //     //return;
+    //     //console.warn(`Output for ${pairs[i].name}`);
+    //     //const pool = await getPoolsByTokenAdresses(pairs[i].tokenInAddress, pairs[i].tokenOutAddress);
+    //     const pool = await getPoolById(params.poolIds[i]);
+    //     console.log(`hop ${i + 1}`);
+    //     const response = await getSwapDetailsWithPool(pool, amountIn, params.tokenNames[i], params.tokenPaths[i + 1]);
+    //     amountIn = response;
+    //     //console.log(`output ${i + 1}`, response);
+    //     results.push(response);
+    // }
+    //console.log({ results });
     res.status(200).json({ results: "Hello World!" });
 }

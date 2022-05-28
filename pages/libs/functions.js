@@ -212,3 +212,125 @@ export const getEthBalance = async (account) => {
     let balance = await web3.eth.getBalance(account);
     return web3.utils.fromWei(balance, "ether");
 }
+
+const tokens = 'ETH WPE WBTC PIXEL YFU STR USDT USDC DAI M2 BHNY LIFT'.split(' ');
+
+const pairs = [
+    ['ETH', 'WPE'],
+    ['ETH', 'WBTC'],
+    ['WPE', 'WBTC'],
+    ['WPE', 'PIXEL'],
+    ['WPE', 'YFU'],
+    ['WPE', 'STR'],
+    ['ETH', 'USDT'],
+    ['ETH', 'USDC'],
+    ['ETH', 'DAI'],
+    ['WPE', 'M2'],
+    ['WPE', 'BHNY'],
+    ['WPE', 'LIFT'],
+];
+
+// create structure where keys in pairs can be mapped to token data
+const tokenData = {
+    ETH: {
+        symbol: 'ETH',
+        decimals: 18,
+        address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+    },
+    WPE: {
+        symbol: 'WPE',
+        decimals: 18,
+        address: '0xd075e95423c5c4ba1e122cae0f4cdfa19b82881b',
+    },
+    WBTC: {
+        symbol: 'WBTC',
+        decimals: 8,
+        address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+    },
+    STR: {
+        symbol: 'STR',
+        decimals: 18,
+        address: '0x11c1a6b3ed6bb362954b29d3183cfa97a0c806aa',
+    }
+};
+
+//const adjecencyList = {};
+
+// the graph
+const adjecencyList = new Map();
+
+const addNode = (node) => {
+    // if (!graph.has(node)) {
+    //     graph.set(node, []);
+    // }
+    adjecencyList.set(node, []);
+}
+
+const addEdge = (origin, destination) => {
+    //console.log("origin", origin);
+    //console.log("destination", destination);
+
+    adjecencyList.get(origin).push(destination);
+    adjecencyList.get(destination).push(origin);
+}
+
+export const dijkstra = async (graph, start, end) => {
+    //const { dijkstra } = require('dijkstrajs');
+    //const path = dijkstra(graph, start, end);
+    //return path;
+    console.log("creating graph")
+    tokens.forEach(addNode);
+    pairs.forEach(pair => addEdge(...pair));
+
+    console.log({ adjecencyList })
+    console.log("running bfs")
+    bfs('ETH', 'STR');
+    console.log("running dfs")
+    dfs('ETH', 'STR');
+}
+
+//BFS Breadth First Search
+export const bfs = async (start, end) => {
+
+    const visited = new Set();
+    const queue = [start];
+
+    while (queue.length > 0) {
+        const token = queue.shift(); // mutate array, remove first item and returns it
+        const pairs = adjecencyList.get(token);
+
+        for (const pair of pairs) {
+
+            if (pair === end) {
+                console.log(`route to ${end} from ${start} found`)
+                //return;
+            }
+
+            if (!visited.has(pair)) {
+                visited.add(pair);
+                queue.push(pair);
+                console.log(pair);
+            }
+        }
+    }
+}
+
+// DFS Depth First Search
+export const dfs = (start, end, visited = new Set()) => {
+    visited.add(start);
+    const pairs = adjecencyList.get(start);
+
+    for (const pair of pairs) {
+
+        if (pair === end) {
+            console.log(`route to ${end} found through ${start}`)
+            // get object where end is in tokenData array
+            //const tokenInfo = Object.values(tokenData).find(token => token.symbol === end);
+            //console.log({ tokenInfo })
+        }
+
+        if (!visited.has(pair)) {
+            dfs(pair, end, visited);
+        }
+    }
+}

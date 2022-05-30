@@ -1,7 +1,43 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { getPoolsByTokenAdresses, getSwapDetailsWithPool, getPoolById } from "../libs/functions"
 
-const params = {
+const test0 = {
+    name: "ETH>WPE",
+    tokenId: "ethereum",
+    tokenInAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+    tokenOutAddress: '0xd075e95423c5c4ba1e122cae0f4cdfa19b82881b',
+    amount: 2,
+    poolIds: [
+        "0x75f89ffbe5c25161cbc7e97c988c9f391eaefaf9" // ETH>WPE
+    ],
+    tokenPaths: [
+        "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", // ETH
+        "0xd075e95423c5c4ba1e122cae0f4cdfa19b82881b", // WPE
+    ],
+    tokenNames: [
+        "ethereum",
+    ]
+}
+
+const test1 = {
+    name: "STR>WPE",
+    tokenId: "starwire",
+    tokenInAddress: '0x11c1a6b3ed6bb362954b29d3183cfa97a0c806aa',
+    tokenOutAddress: '0xd075e95423c5c4ba1e122cae0f4cdfa19b82881b',
+    amount: 10000,
+    poolIds: [
+        "0x8eaa970be66d4de446453aea538173382c2cace8" // WPE>STR
+    ],
+    tokenPaths: [
+        "0x11c1a6b3ed6bb362954b29d3183cfa97a0c806aa", // STR
+        "0xd075e95423c5c4ba1e122cae0f4cdfa19b82881b", // WPE
+    ],
+    tokenNames: [
+        "starwire",
+    ]
+}
+
+const test2 = {
     name: "ETH>STR",
     tokenId: "ethereum",
     tokenInAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
@@ -26,19 +62,13 @@ const params = {
 }
 
 export default async function handler(req, res) {
-    console.warn("Swap for pairs with hops test:::")
-    let results = [];
-    let amountIn = params.amount;
-    for (let i = 0; i < params.poolIds.length; i++) {
-        //console.warn(`Output for ${pairs[i].name}`);
-        //const pool = await getPoolsByTokenAdresses(pairs[i].tokenInAddress, pairs[i].tokenOutAddress);
-        const pool = await getPoolById(params.poolIds[i]);
-        console.log(`hop ${i + 1}`);
-        const response = await getSwapDetailsWithPool(pool, amountIn, params.tokenNames[i], params.tokenPaths[i + 1]);
-        amountIn = response;
-        //console.log(`output ${i + 1}`, response);
-        results.push(response);
-    }
-    console.log({ results });
-    res.status(200).json({ results: "Hello World!" });
+    const test = test0;
+    let t1 = performance.now();
+    console.warn("Swap for pairs with hops test:::");
+    test.tokenPaths.slice(1);
+    const start = 0, end = test.poolIds.length, amount = test.amount;
+
+    getSwapDetailsWithPool(start, end, amount, test, t1);
+
+    res.status(200).json({ result: `Done!` });
 }

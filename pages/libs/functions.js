@@ -16,7 +16,7 @@ export const getPoolById = async (id) => {
             }),
         });
         const data = await response.json();
-        console.log({ data });
+        //console.log({ data });
         return data.data.pairs;
     } catch (error) {
         console.error(error);
@@ -62,22 +62,28 @@ export const getPoolsByTokenAdresses = async (tokenIn, tokenOut) => {
     }
 }
 
-export const getSwapDetailsWithPool = async (pool, amount, tokenId, tokenOut) => {
-    //console.log({ pool })
+export const getSwapDetailsWithPool = async (start, end, amount, params, t1) => {
     try {
-        //console.log(pool, amount, tokenId, tokenOut);
-        //const pool1 = pool.data.pairs0[0];
-        //const pool2 = pool.data.pairs1[0];
-        //const temp = pool1 ? pool1 : pool2;
-        const temp = pool[0];
-        //console.log("temp pool", temp)
-        const usdPrice0 = await getPrice(tokenId);
+        const { poolIds, tokenNames, tokenPaths } = params;
+
+        const poolData = await getPoolById(poolIds[start]);
+
+        if (start >= end) {
+            let t2 = performance.now();
+            console.warn("Call to doSwap took " + (t2 - t1) + " milliseconds.");
+            console.log("Your Amount Out", amount);
+            return amount;
+        }
+
+        const temp = poolData[0];
+
+        const usdPrice0 = await getPrice(tokenNames[start]);
         const usdPriceAmount = Number(usdPrice0) * Number(amount);
 
         let reserveIn = temp.reserve0//.toString();
         let reserveOut = temp.reserve1//.toString();
 
-        const validateReserve = String(tokenOut).toLowerCase() === String(temp.token1.id).toLowerCase()
+        const validateReserve = String(tokenPaths[start + 1]).toLowerCase() === String(temp.token1.id).toLowerCase()
 
         const _reserves =
             validateReserve
@@ -98,7 +104,8 @@ export const getSwapDetailsWithPool = async (pool, amount, tokenId, tokenOut) =>
 
         console.log(`You sell ${validateReserve ? temp.token0.symbol : temp.token1.symbol} : ${amount} ~$${usdPriceAmount}`)
         console.log(`You buy ${validateReserve ? temp.token1.symbol : temp.token0.symbol} : ${amountOut} ~$${usdPriceAmount + usdPrice0Percentage} (${percentage.toFixed(2)})`);
-        return amountOut;
+
+        getSwapDetailsWithPool(start + 1, end, amountOut, params, t1);
     } catch (error) {
         console.error(error);
     }

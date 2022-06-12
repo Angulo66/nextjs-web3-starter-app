@@ -12,142 +12,108 @@ const navigation = [
 
 export default function Example() {
   return (
-    <div className="relative bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-          <svg
-            className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
-            fill="currentColor"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <polygon points="50,0 100,0 50,100 0,100" />
-          </svg>
-
-          <Popover>
-            <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
-              <nav className="relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">
-                <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
-                  <div className="flex items-center justify-between w-full md:w-auto">
-                    <a href="#">
-                      <span className="sr-only">Workflow</span>
-                      <img
-                        alt="Workflow"
-                        className="h-8 w-auto sm:h-10"
-                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                      />
-                    </a>
-                    <div className="-mr-2 flex items-center md:hidden">
-                      <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                        <span className="sr-only">Open main menu</span>
-                        <MenuIcon className="h-6 w-6" aria-hidden="true" />
-                      </Popover.Button>
-                    </div>
-                  </div>
-                </div>
-                <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
-                  {navigation.map((item) => (
-                    <a key={item.name} href={item.href} className="font-medium text-gray-500 hover:text-gray-900">
-                      {item.name}
-                    </a>
-                  ))}
-                  <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                    Log in
-                  </a>
-                </div>
-              </nav>
+    <div className="flex w-full h-screen">
+      <div className="w-full flex items-center justify-center ">
+        <div className='bg-white  py-20 rounded-3xl border-2 border-gray-100  px-10'>
+          <div className='flex -mt-12'>
+            <div className="grow h-14 flex">
+              <div className='text-lg hover:scale-[1.08] cursor-pointer font-semibold'>Swap</div>
+              <div className='px-4 text-lg hover:scale-[1.08] cursor-pointer font-semibold'>Limit</div>
+              <div className='px-4 text-lg hover:scale-[1.08] cursor-pointer font-semibold'>P2P</div>
             </div>
-
-            <Transition
-              as={Fragment}
-              enter="duration-150 ease-out"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="duration-100 ease-in"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <Popover.Panel
-                focus
-                className="absolute z-10 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
-              >
-                <div className="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
-                  <div className="px-5 pt-4 flex items-center justify-between">
-                    <div>
-                      <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="-mr-2">
-                      <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                        <span className="sr-only">Close main menu</span>
-                        <XIcon className="h-6 w-6" aria-hidden="true" />
-                      </Popover.Button>
-                    </div>
-                  </div>
-                  <div className="px-2 pt-2 pb-3 space-y-1">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                  <a
-                    href="#"
-                    className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100"
-                  >
-                    Log in
-                  </a>
+            <div className="flex-none w-14 h-14">
+              <button
+                className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.2] px-4 '>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              </button>
+              <button
+                className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.2] -mr-8'>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div className='bg-gray-100  rounded-2xl mt-1'>
+            <h1 className='text-xs text-gray-400 hover:text-slate-800 cursor-pointer pl-2 pt-2'>You sell</h1>
+            <div className='flex mt-4  mr-6  pl-5'>
+              <button className='flex items-center justify-center gap-2 active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01]  ease-in-out transform rounded-xl  font-semibold text-lg border-2 border-gray-100 hover:bg-gray-50'>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.26644 9.76453C6.19903 6.93863 8.85469 4.90909 12.0002 4.90909C13.6912 4.90909 15.2184 5.50909 16.4184 6.49091L19.9093 3C17.7821 1.14545 15.0548 0 12.0002 0C7.27031 0 3.19799 2.6983 1.24023 6.65002L5.26644 9.76453Z" fill="#EA4335" />
+                  <path d="M16.0406 18.0142C14.9508 18.718 13.5659 19.0926 11.9998 19.0926C8.86633 19.0926 6.21896 17.0785 5.27682 14.2695L1.2373 17.3366C3.19263 21.2953 7.26484 24.0017 11.9998 24.0017C14.9327 24.0017 17.7352 22.959 19.834 21.0012L16.0406 18.0142Z" fill="#34A853" />
+                  <path d="M19.8342 20.9978C22.0292 18.9503 23.4545 15.9019 23.4545 11.9982C23.4545 11.2891 23.3455 10.5255 23.1818 9.81641H12V14.4528H18.4364C18.1188 16.0119 17.2663 17.2194 16.0407 18.0108L19.8342 20.9978Z" fill="#4A90E2" />
+                  <path d="M5.27698 14.2663C5.03833 13.5547 4.90909 12.7922 4.90909 11.9984C4.90909 11.2167 5.03444 10.4652 5.2662 9.76294L1.23999 6.64844C0.436587 8.25884 0 10.0738 0 11.9984C0 13.918 0.444781 15.7286 1.23746 17.3334L5.27698 14.2663Z" fill="#FBBC05" />
+                </svg>
+                <span>DAI</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="gray" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div className='text-lg pl-44'>345345345</div>
+            </div>
+            <div className='flex mt-5 container mx-auto px-4 '>
+              <div className='text-xs text-gray-400 grow h-14 flex hover:text-slate-800 cursor-pointer '>Dai Stablecoin</div>
+              <div className='text-xs text-gray-400 flex-none    h-14 '>~$345,688,204</div>
+            </div>
+          </div>
+          <div className='flex justify-center rounded-r-sm'>
+            <button className='rounded-full bg-white border-2 border-gray-200 cursor-pointer -mb-3 hover:scale-[1.01]'>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="blue" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </button>
+          </div>
+          <div className='rounded-2xl mt-1 border-2'>
+            <h1 className='text-base text-gray-400 hover:text-slate-800 cursor-pointer pl-4 pt-2'>You buy</h1>
+            <div className='flex mt-5  mr-6  pl-5'>
+              <button className='flex items-center justify-center gap-2 active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01]  ease-in-out transform rounded-xl  font-semibold text-lg border-2 border-gray-100 hover:bg-gray-50'>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.26644 9.76453C6.19903 6.93863 8.85469 4.90909 12.0002 4.90909C13.6912 4.90909 15.2184 5.50909 16.4184 6.49091L19.9093 3C17.7821 1.14545 15.0548 0 12.0002 0C7.27031 0 3.19799 2.6983 1.24023 6.65002L5.26644 9.76453Z" fill="#EA4335" />
+                  <path d="M16.0406 18.0142C14.9508 18.718 13.5659 19.0926 11.9998 19.0926C8.86633 19.0926 6.21896 17.0785 5.27682 14.2695L1.2373 17.3366C3.19263 21.2953 7.26484 24.0017 11.9998 24.0017C14.9327 24.0017 17.7352 22.959 19.834 21.0012L16.0406 18.0142Z" fill="#34A853" />
+                  <path d="M19.8342 20.9978C22.0292 18.9503 23.4545 15.9019 23.4545 11.9982C23.4545 11.2891 23.3455 10.5255 23.1818 9.81641H12V14.4528H18.4364C18.1188 16.0119 17.2663 17.2194 16.0407 18.0108L19.8342 20.9978Z" fill="#4A90E2" />
+                  <path d="M5.27698 14.2663C5.03833 13.5547 4.90909 12.7922 4.90909 11.9984C4.90909 11.2167 5.03444 10.4652 5.2662 9.76294L1.23999 6.64844C0.436587 8.25884 0 10.0738 0 11.9984C0 13.918 0.444781 15.7286 1.23746 17.3334L5.27698 14.2663Z" fill="#FBBC05" />
+                </svg>
+                <span>DAI</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="gray" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+            <div className='mt-5 container mx-auto px-4 '>
+              <div className='border-2 rounded-2xl h-25 mb-2 border-sky-600' >
+                <div className='bg-green-600 text-white text-xs pl-2 rounded-tl-lg rounded-br-lg rounded-tr-lg w-32 -mt-2 -ml-0.5 p-1' >Save $106,190,229.10</div>
+                <div className='flex mt-2 container mx-auto px-4 '>
+                  <div className='text-lg  grow h-14 flex hover:text-slate-800 cursor-pointer '>1inch</div>
+                  <div className='text-lg  flex-none    h-14 cursor-pointer'>188 033.3911058</div>
                 </div>
-              </Popover.Panel>
-            </Transition>
-          </Popover>
-
-          <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-            <div className="sm:text-center lg:text-left">
-              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block xl:inline">Data to enrich your</span>{' '}
-                <span className="block text-indigo-600 xl:inline">online business</span>
-              </h1>
-              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-                fugiat veniam occaecat fugiat aliqua.
-              </p>
-              <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                <div className="rounded-md shadow">
-                  <a
-                    href="#"
-                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                  >
-                    Get started
-                  </a>
+                <div className='container  px-4 -mb-5 -mt-5'>
+                  <div className='text-xs text-gray-400 grow h-14 flex cursor-pointer '>Tx cost 0.01263 0.012 Ξ (~...  ~$182,701,953 <span className='text-red-600'>(-47.25%) </span> </div>
                 </div>
-                <div className="mt-3 sm:mt-0 sm:ml-3">
-                  <a
-                    href="#"
-                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
-                  >
-                    Live demo
-                  </a>
+              </div>
+              <div className='border-2 rounded-2xl h-25 mb-2'>
+                <div className='flex mt-2 container mx-auto px-4 hover:bg-gray-50 '>
+                  <div className='text-lg  grow h-14 flex hover:text-slate-800 cursor-pointer active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] '>Uniswap
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="gray" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                  <div className='text-lg  flex-none    h-14 cursor-pointer'>188 033.3911058</div>
+                </div>
+                <div className='container  px-4 -mb-5 -mt-5'>
+                  <div className='text-xs text-gray-400 grow h-14 flex  cursor-pointer '>Tx cost 0.01263 0.012 Ξ (~...  ~$182,701,953 <span className='text-red-600'>(-47.25%) </span> </div>
                 </div>
               </div>
             </div>
-          </main>
+          </div>
+          <div className='mt-8 flex flex-col gap-y-4'>
+            <button className='flex items-center justify-center gap-2 aactive:scale-[.98] active:duration-75 transition-all hover:scale-[1.01]  ease-in-out transform py-4 bg-blue-200 rounded-xl text-blue-500 font-semibold text-lg hover:bg-blue-100'>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+              </svg> Connect wallet</button>
+          </div>
         </div>
-      </div>
-      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <img
-          className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-          src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
-          alt=""
-        />
       </div>
     </div>
   )

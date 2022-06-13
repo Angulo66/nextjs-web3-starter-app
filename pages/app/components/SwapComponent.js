@@ -9,7 +9,7 @@ import {
 function ReverseInputsComponent() {
   return (
     <div className="flex justify-center rounded-r-sm">
-      <button className="rounded-full bg-white border-2 border-gray-200 cursor-pointer -mb-3 hover:scale-[1.11] hover:rotate-180">
+      <button className="rounded-full bg-white border-2 border-gray-200 cursor-pointer -mb-3 hover:scale-[1.11]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"

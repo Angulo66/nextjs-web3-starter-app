@@ -1,5 +1,15 @@
-import SwapComponent from "./app/components/SwapComponent";
+import {
+  AdvancedOptionsModal,
+  SwapComponent,
+  TokenListModal,
+} from "./app/components/index";
 
 export default function Example() {
-  return <SwapComponent />;
+  return (
+    <>
+      <SwapComponent />
+      <TokenListModal />
+      <AdvancedOptionsModal />
+    </>
+  );
 }

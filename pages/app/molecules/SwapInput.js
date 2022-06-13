@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { atom, useAtom } from "jotai";
+import { openTokensAtom } from "../components/TokenListModal";
 
 const swap = {
   token: "DAI",
@@ -12,6 +14,7 @@ const swap = {
 };
 
 export default function SwapInput() {
+  let [isOpen, setIsOpen] = useAtom(openTokensAtom);
   return (
     <div className="bg-gray-100  rounded-2xl mt-1">
       <div className="flex mt-5 container mx-auto px-4">
@@ -31,7 +34,10 @@ export default function SwapInput() {
         </h1>
       </div>
       <div className="flex mt-4  mr-6  pl-5">
-        <button className="flex items-center justify-center gap-2 active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01]  ease-in-out transform rounded-xl  font-semibold text-lg border-2 border-gray-100 hover:bg-gray-50">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="flex items-center justify-center gap-2 active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01]  ease-in-out transform rounded-xl  font-semibold text-lg border-2 border-gray-100 hover:bg-gray-50"
+        >
           <Image
             src={swap.logoURI}
             alt={swap.tokenAddress}
@@ -40,7 +46,16 @@ export default function SwapInput() {
           />
           <span>{swap.token}</span>
         </button>
-        <div className="text-lg pl-44">{swap.amount}</div>
+        <div className="pl-[6rem]">
+          <div className="mt-1 rounded-md shadow-sm">
+            <input
+              type="number"
+              id="amount"
+              className="block pl-2 rounded-md focus:outline-0 h-7 max-h-[1.9rem] w-full text-gray-600 placeholder-gray-600"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
       </div>
       <div className="flex mt-5 container mx-auto px-4">
         <div className="text-xs text-gray-400 grow h-14 flex hover:text-slate-800 cursor-pointer ">

@@ -2,6 +2,7 @@ import {
   AdvancedOptionsModal,
   SwapComponent,
   TokenListModal,
+  ConnectListModal
 } from "./app/components/index";
 
 export default function Example() {
@@ -10,6 +11,7 @@ export default function Example() {
       <SwapComponent />
       <TokenListModal />
       <AdvancedOptionsModal />
+      <ConnectListModal />   
     </>
   );
 }

@@ -18,7 +18,7 @@ export default function SwapInput() {
   return (
     <div className="bg-gray-100  rounded-2xl mt-1">
       <div className="flex mt-5 container mx-auto px-4">
-        <h1 className="text-xs text-gray-400 hover:text-slate-800 cursor-pointer pl-2 pt-2">
+        <h1 className="text-xs text-gray-400 hover:text-slate-800 cursor-pointer pl-2 pt-2 grow flex">
           <a
             href={`https://etherscan.io/token/${swap.tokenAddress}`}
             target="blank"
@@ -26,9 +26,9 @@ export default function SwapInput() {
             You sell
           </a>
         </h1>
-        <h1 className="text-xs text-gray-400 pl-2 pt-2">
-          Balance: {swap.balance}
-          <button className="rounded-full bg-white border-2 border-gray-200 cursor-pointer -mb-3 hover:scale-[1.01]">
+        <h1 className="text-xs text-gray-400 pl-2 pt-2 flex-none  ">
+          <span className="mr-2">Balance: {swap.balance}</span>
+          <button className="rounded-full bg-white border-2 border-gray-200 cursor-pointer -mb-3 hover:scale-[1.01] h-6 w-10 active:scale-[.98] active:duration-75 transition-all">
             Max
           </button>
         </h1>

@@ -3,8 +3,8 @@ import { Fragment } from "react";
 import { atom, useAtom } from "jotai";
 import Card from "../templates/Card";
 import Image from "next/image";
-
 const tokens = require("../../api/tokens/mainnet.json");
+
 
 export const openTokensAtom = atom(false);
 
@@ -13,13 +13,16 @@ function SearchToken() {
     <div className="flex justify-center">
       <div className="mb-3 xl:w-96">
         <div className="input-group relative flex flex-wrap items-stretch w-full mb-4 rounded">
+          
           <input
             type="search"
-            className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            className="h-12 form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-gray-100 bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700  focus:border-blue-600 focus:outline-none"
             placeholder="Search by name or paste address"
             aria-label="Search"
             aria-describedby="button-addon2"
-          ></input>
+          >
+
+          </input>
           <span
             className="input-group-text flex items-center px-3 py-1.5 text-base font-normal text-gray-700 text-center whitespace-nowrap rounded"
             id="basic-addon2"
@@ -32,12 +35,12 @@ function SearchToken() {
 
 function PinnedTokens() {
   return (
-    <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-4">
+    <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-4 -mt-8">
       {tokens.slice(0, 5).map((item) => (
         <a
           key={item.address}
           //href={item.href}
-          className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+          className="border-2 -m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-100 cursor-pointer focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
         >
           <div className="flex h-10 w-5 shrink-0 items-center justify-center text-white sm:h-7 sm:w-5">
             <Image
@@ -64,7 +67,7 @@ function TokenList() {
         <a
           key={item.address}
           //href={item.href}
-          className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+          className=" flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
         >
           <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
             <Image
@@ -74,7 +77,7 @@ function TokenList() {
               height={48}
             />
           </div>
-          <div className="ml-4">
+          <div className="ml-4 w-96 text-left">
             <p className="text-sm font-medium text-gray-900">{item.name}</p>
             <p className="text-sm text-gray-500">{item.symbol}</p>
           </div>
@@ -126,13 +129,14 @@ export default function MyModal() {
                   <Card>
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
+                      className="text-xl font-medium mb-5 leading-6 text-gray-900 -mt-16"
                     >
                       Select a token
                     </Dialog.Title>
-                    <SearchToken />
+                    <SearchToken />       
                     <PinnedTokens />
-                    <div className="flex overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                    <div className="h-0.5  bg-gray-300 mb-2"></div>
+                    <div className="flex overflow-hidden rounded-l  ring-1 ring-black cursor-pointer ring-opacity-5">
                       <div className="relative gap-8 bg-white p-7 lg:grid-cols-2">
                         <TokenList />
                       </div>

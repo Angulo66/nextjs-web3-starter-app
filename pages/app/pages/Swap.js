@@ -3,9 +3,9 @@ import {
   SwapComponent,
   TokenListModal,
   SwapHeader,
-} from "./app/components/index";
+} from "../components/";
 
-export default function Example() {
+export default function Swap({ pageProps }) {
   return (
     <>
       <SwapHeader />
